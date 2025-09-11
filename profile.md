@@ -1,6 +1,217 @@
 // components/ProfilePage.jsx
 'use client';
 
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  User,
+  Mail,
+  Phone,
+  Calendar,
+  Edit3,
+  Save,
+  Briefcase,
+  Settings,
+  LogOut,
+  Home,
+  Upload,
+  Cog
+} from 'lucide-react';
+
+const ProfilePage = () => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const userData = {
+    name: 'Alan David',
+    email: 'alan.david@skystruct.com',
+    position: 'Project Manager',
+    department: 'Construction Management',
+    phone: '+91 98765 43210',
+    joinDate: '15 Mar 2022',
+    employeeId: 'SKY-EMP-2287',
+    address: '123 Construction Avenue, Mumbai, Maharashtra - 400001',
+    bio: 'Experienced project manager with 8+ years in construction industry. Specialized in high-rise commercial projects and resource management.',
+    image: null
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-6xl mx-auto">
+        {/* Header with Avatar Menu */}
+        <div className="flex items-center justify-between mb-8 relative">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-1">Profile Overview</h1>
+            <p className="text-gray-600">
+              Manage your personal information and view project statistics
+            </p>
+          </div>
+
+          {/* Avatar with hover button */}
+          <div className="relative group">
+            <motion.div
+              onClick={() => setMenuOpen(!menuOpen)}
+              whileHover={{ scale: 1.05 }}
+              className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center cursor-pointer border-2 border-blue-600 shadow-md overflow-hidden"
+            >
+              {userData.image ? (
+                <img
+                  src={userData.image}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <User className="w-6 h-6 text-blue-600" />
+              )}
+            </motion.div>
+
+            {/* Hover Settings Button */}
+            <motion.button
+              initial={{ opacity: 0, y: -10 }}
+              whileHover={{ scale: 1.05 }}
+              className="absolute -bottom-2 right-0 opacity-0 group-hover:opacity-100 transition-opacity bg-blue-600 text-white p-1.5 rounded-full shadow-md"
+            >
+              <Cog size={16} />
+            </motion.button>
+
+            {/* Dropdown Menu */}
+            <AnimatePresence>
+              {menuOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute right-0 mt-3 w-48 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50"
+                >
+                  {[
+                    { label: 'My Profile', icon: User },
+                    { label: 'My Projects', icon: Briefcase },
+                    { label: 'Company', icon: Home },
+                    { label: 'Settings', icon: Settings },
+                    { label: 'Logout', icon: LogOut }
+                  ].map((item, i) => (
+                    <button
+                      key={i}
+                      className="w-full flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all"
+                    >
+                      <item.icon size={16} />
+                      {item.label}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Profile Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8"
+        >
+          {/* Top Section */}
+          <div className="flex flex-col md:flex-row items-start gap-8 mb-8">
+            {/* Avatar */}
+            <div className="relative w-32 h-32 rounded-full bg-gray-100 flex items-center justify-center border-2 border-gray-300">
+              {userData.image ? (
+                <img
+                  src={userData.image}
+                  alt="Profile"
+                  className="w-full h-full rounded-full object-cover"
+                />
+              ) : (
+                <User className="w-14 h-14 text-gray-400" />
+              )}
+            </div>
+
+            {/* Details */}
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900">{userData.name}</h3>
+                <p className="text-gray-600">{userData.position}</p>
+                <p className="text-sm text-gray-500">{userData.department}</p>
+              </div>
+
+              <div className="space-y-2 text-sm text-gray-600">
+                <p className="flex items-center gap-2">
+                  <Mail size={16} className="text-blue-500" /> {userData.email}
+                </p>
+                <p className="flex items-center gap-2">
+                  <Phone size={16} className="text-blue-500" /> {userData.phone}
+                </p>
+                <p className="flex items-center gap-2">
+                  <Calendar size={16} className="text-blue-500" /> Joined {userData.joinDate}
+                </p>
+                <p className="flex items-center gap-2">
+                  <span className="font-semibold">ID:</span> {userData.employeeId}
+                </p>
+              </div>
+            </div>
+
+            {/* Edit button */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsEditing(!isEditing)}
+              className="flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded-xl font-semibold hover:bg-blue-700 transition-all shadow-md self-start"
+            >
+              {isEditing ? <Save size={18} /> : <Edit3 size={18} />}
+              {isEditing ? 'Save' : 'Edit'}
+            </motion.button>
+          </div>
+
+          {/* Address */}
+          <div className="mb-6">
+            <label className="text-sm font-semibold text-gray-700 block mb-2">Address</label>
+            <input
+              type="text"
+              defaultValue={userData.address}
+              disabled={!isEditing}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl disabled:bg-gray-100 disabled:text-gray-500 focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          {/* Bio */}
+          <div className="mb-6">
+            <label className="text-sm font-semibold text-gray-700 block mb-2">Bio</label>
+            <textarea
+              defaultValue={userData.bio}
+              disabled={!isEditing}
+              rows={4}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl disabled:bg-gray-100 disabled:text-gray-500 focus:ring-2 focus:ring-blue-500 resize-none"
+            />
+          </div>
+
+          {/* Signature Upload */}
+          <div>
+            <label className="text-sm font-semibold text-gray-700 block mb-3">Signature</label>
+            <div className="w-full p-6 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 hover:border-blue-400 transition-all cursor-pointer flex flex-col items-center justify-center gap-3">
+              <Upload className="w-8 h-8 text-gray-400" />
+              <p className="text-gray-600 text-sm">
+                Drag & drop your signature here, or click to upload
+              </p>
+              <p className="text-gray-400 text-xs">PNG, JPG up to 5MB</p>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
+export default ProfilePage;
+
+
+
+
+
+
+// components/ProfilePage.jsx
+'use client';
+
 import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { 

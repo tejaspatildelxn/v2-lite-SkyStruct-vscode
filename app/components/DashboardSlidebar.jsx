@@ -1,9 +1,23 @@
-// components/DashboardSlidebar.jsx
 'use client';
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LogOut } from 'lucide-react';
+import { 
+  LogOut, 
+  ChevronDown, 
+  LayoutDashboard,
+  Mail,
+  Users,
+  Settings,
+  FolderOpen,
+  UserCheck,
+  Store,
+  Shield,
+  Calendar,
+  Bell,
+  Clock,
+  ChevronLeft
+} from 'lucide-react';
 import Link from 'next/link';
 
 const DashboardSlidebar = () => {
@@ -19,235 +33,293 @@ const DashboardSlidebar = () => {
     {
       name: 'Project Overview',
       path: '/admin/dashboard/projects',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-        </svg>
-      )
+      icon: LayoutDashboard,
+      badge: '24',
+      badgeColor: 'bg-blue-100 text-blue-700'
     },
     {
       name: 'Organization Mail',
       path: '/admin/dashboard/mail',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
-      )
+      icon: Mail,
+      badge: '12',
+      badgeColor: 'bg-red-100 text-red-700'
     },
     {
       name: 'Users',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-      ),
+      icon: Users,
       submenu: [
-        { name: 'Member', path: '/admin/dashboard/member' },
-        { name: 'Vendor', path: '/admin/dashboard/vendor' }
+        { 
+          name: 'Member', 
+          path: '/admin/dashboard/member',
+          icon: UserCheck,
+          badge: '156'
+        },
+        { 
+          name: 'Vendor', 
+          path: '/admin/dashboard/vendor',
+          icon: Store,
+          badge: '48'
+        }
       ]
     },
     {
       name: 'Settings',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-      ),
+      icon: Settings,
       submenu: [
-        { name: 'Permissions', path: '/admin/dashboard/permissions' },
-        { name: 'Event', path: '/admin/dashboard/event' },
-        { name: 'Reminder', path: '/admin/dashboard/reminder' },
-        { name: 'Schedule', path: '/admin/dashboard/schedule' }
+        { 
+          name: 'Permissions', 
+          path: '/admin/dashboard/permissions',
+          icon: Shield
+        },
+        { 
+          name: 'Event', 
+          path: '/admin/dashboard/event',
+          icon: Calendar,
+          badge: '3'
+        },
+        { 
+          name: 'Reminder', 
+          path: '/admin/dashboard/reminder',
+          icon: Bell,
+          badge: '7'
+        },
+        { 
+          name: 'Schedule', 
+          path: '/admin/dashboard/schedule',
+          icon: Clock
+        }
       ]
     },
     {
       name: 'My Projects',
       path: '/admin/dashboard/projects',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-        </svg>
-      )
+      icon: FolderOpen,
+      badge: '8',
+      badgeColor: 'bg-green-100 text-green-700'
     }
   ];
 
   return (
     <motion.aside
-      animate={{ width: collapsed ? 78 : 250 }}
-      transition={{ duration: 0.35, ease: 'easeInOut' }}
-      className="relative bg-white h-screen border-r border-slate-200 flex flex-col"
+      animate={{ width: collapsed ? 85 : 280 }}
+      transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+      className="relative bg-white h-screen border-r-2 border-gray-100 flex flex-col shadow-xl"
     >
       {/* Collapse Button */}
-      <button
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
         onClick={() => setCollapsed(!collapsed)}
-        className="absolute top-1/2 -right-3 transform -translate-y-1/2 bg-slate-100 hover:bg-slate-200 border border-slate-300 w-6 h-14 flex items-center justify-center rounded-md shadow-sm transition"
+        className="absolute top-1/2 -right-5 transform -translate-y-1/2 bg-white hover:bg-gray-50 border-2 border-gray-200 w-10 h-10 flex items-center justify-center rounded-xl shadow-lg transition-all hover:shadow-xl z-50"
       >
-        <motion.svg
+        <motion.div
           animate={{ rotate: collapsed ? 180 : 0 }}
           transition={{ duration: 0.3 }}
-          className="w-4 h-4 text-slate-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-        </motion.svg>
-      </button>
+          <ChevronLeft className="w-5 h-5 text-gray-600" />
+        </motion.div>
+      </motion.button>
 
       {/* Header */}
-      <div className="p-4 border-b border-slate-200 flex items-center gap-3">
-        <div className="bg-slate-900 h-8 w-8 rounded-md flex items-center justify-center">
-          <span className="text-white font-bold text-xs">SS</span>
-        </div>
-        <AnimatePresence>
-          {!collapsed && (
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="font-bold text-lg text-slate-900"
-            >
-              SkyStruct <span className="text-blue-500">V2</span>
-            </motion.span>
-          )}
-        </AnimatePresence>
-      </div>
-
-      {/* User Profile */}
-      <div className="p-4 border-b border-slate-200">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-semibold text-xs">
-            AD
-          </div>
+      <div className="p-6 border-b-2 border-gray-100">
+        <div className="flex items-center gap-4">
+          <motion.div 
+            whileHover={{ scale: 1.05 }}
+            className="bg-gradient-to-br from-blue-500 to-blue-600 h-12 w-12 rounded-2xl flex items-center justify-center shadow-lg"
+          >
+            <span className="text-white font-bold text-lg">SS</span>
+          </motion.div>
           <AnimatePresence>
             {!collapsed && (
               <motion.div
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
-                transition={{ duration: 0.25 }}
+                transition={{ duration: 0.3 }}
               >
-                <h3 className="font-semibold text-slate-900">Alan David</h3>
-                <p className="text-xs text-slate-500">Project Manager</p>
+                <h1 className="font-bold text-xl text-gray-900">
+                  SkyStruct <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-600">V2</span>
+                </h1>
+                <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Construction Hub</p>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
       </div>
 
-      {/* Main Navigation */}
-      <nav className="flex-1 overflow-y-auto py-3">
-        <ul className="px-2 space-y-1">
-          {menuItems.map((item) => (
-            <li key={item.name}>
-              {item.submenu ? (
-                <>
-                  {/* Parent with Submenu */}
-                  <button
-                    onClick={() => toggleSubmenu(item.name)}
-                    className={`w-full flex items-center justify-start px-3 py-2 rounded-lg transition-all duration-200 group focus:outline-none ${
-                      activeItem === item.name
-                        ? 'bg-blue-50 text-blue-600 border border-blue-200 shadow-sm'
-                        : 'text-slate-700 hover:bg-slate-50 hover:shadow-sm hover:text-slate-900'
-                    }`}
-                  >
-                    <span
-                      className={`mr-3 flex-shrink-0 ${
-                        activeItem === item.name ? 'text-blue-600' : 'text-slate-500'
-                      }`}
-                    >
-                      {item.icon}
-                    </span>
-                    {!collapsed && <span className="font-medium text-sm tracking-wide">{item.name}</span>}
-                    {!collapsed && (
-                      <motion.svg
-                        animate={{ rotate: openSubmenu === item.name ? 180 : 0 }}
-                        transition={{ duration: 0.25 }}
-                        className="w-4 h-4 ml-auto text-slate-500"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                      </motion.svg>
-                    )}
-                  </button>
-
-                  {/* Submenu Items */}
-                  <AnimatePresence>
-                    {openSubmenu === item.name && !collapsed && (
-                      <motion.ul
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3, ease: 'easeInOut' }}
-                        className="ml-8 mt-1 space-y-1 overflow-hidden"
-                      >
-                        {item.submenu.map((sub) => (
-                          <li key={sub.name}>
-                            <Link href={sub.path}>
-                              <button
-                                onClick={() => setActiveItem(sub.name)}
-                                className={`w-full flex items-center justify-start px-3 py-2 text-left rounded-lg text-sm transition-all duration-200 ${
-                                  activeItem === sub.name
-                                    ? 'bg-blue-100 text-blue-600'
-                                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                                }`}
-                              >
-                                {sub.name}
-                              </button>
-                            </Link>
-                          </li>
-                        ))}
-                      </motion.ul>
-                    )}
-                  </AnimatePresence>
-                </>
-              ) : (
-                <Link href={item.path}>
-                  <button
-                    onClick={() => setActiveItem(item.name)}
-                    className={`w-full flex items-center justify-start px-3 py-2 rounded-lg transition-all duration-200 group focus:outline-none ${
-                      activeItem === item.name
-                        ? 'bg-blue-50 text-blue-600 border border-blue-200 shadow-sm'
-                        : 'text-slate-700 hover:bg-slate-50 hover:shadow-sm hover:text-slate-900'
-                    }`}
-                  >
-                    <span
-                      className={`mr-3 flex-shrink-0 ${
-                        activeItem === item.name ? 'text-blue-600' : 'text-slate-500'
-                      }`}
-                    >
-                      {item.icon}
-                    </span>
-                    {!collapsed && <span className="font-medium text-sm tracking-wide">{item.name}</span>}
-                  </button>
-                </Link>
+      {/* User Profile Card */}
+      <div className="p-6 border-b-2 border-gray-100">
+        <motion.div 
+          whileHover={{ scale: 1.02 }}
+          className="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-2xl p-4 border border-blue-200"
+        >
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold shadow-lg">
+                AD
+              </div>
+              <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+            </div>
+            <AnimatePresence>
+              {!collapsed && (
+                <motion.div
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -10 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <h3 className="font-bold text-gray-900">Alan David</h3>
+                  <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Project Manager</p>
+                </motion.div>
               )}
-            </li>
-          ))}
+            </AnimatePresence>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Main Navigation */}
+      <nav className="flex-1 overflow-y-auto py-4 px-4">
+        <ul className="space-y-2">
+          {menuItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = activeItem === item.name;
+            const hasSubmenu = item.submenu;
+            const isSubmenuOpen = openSubmenu === item.name;
+
+            return (
+              <li key={item.name}>
+                {hasSubmenu ? (
+                  <>
+                    {/* Parent with Submenu */}
+                    <motion.button
+                      whileHover={{ x: collapsed ? 0 : 4 }}
+                      onClick={() => toggleSubmenu(item.name)}
+                      className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl transition-all duration-300 group ${
+                        isActive
+                          ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg'
+                          : 'text-gray-700 hover:bg-gray-50 hover:shadow-md'
+                      }`}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className={`flex-shrink-0 ${isActive ? 'text-white' : 'text-gray-500'}`}>
+                          <Icon className="w-5 h-5" />
+                        </div>
+                        {!collapsed && (
+                          <span className="font-medium text-sm">{item.name}</span>
+                        )}
+                      </div>
+                      {!collapsed && (
+                        <motion.div
+                          animate={{ rotate: isSubmenuOpen ? 180 : 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <ChevronDown className="w-4 h-4" />
+                        </motion.div>
+                      )}
+                    </motion.button>
+
+                    {/* Submenu Items */}
+                    <AnimatePresence>
+                      {isSubmenuOpen && !collapsed && (
+                        <motion.ul
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3, ease: 'easeInOut' }}
+                          className="mt-2 ml-4 space-y-1 overflow-hidden"
+                        >
+                          {item.submenu.map((sub) => {
+                            const SubIcon = sub.icon;
+                            const isSubActive = activeItem === sub.name;
+                            
+                            return (
+                              <li key={sub.name}>
+                                <Link href={sub.path}>
+                                  <motion.button
+                                    whileHover={{ x: 4 }}
+                                    onClick={() => setActiveItem(sub.name)}
+                                    className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl transition-all duration-300 ${
+                                      isSubActive
+                                        ? 'bg-blue-50 text-blue-600 border border-blue-200'
+                                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                    }`}
+                                  >
+                                    <div className="flex items-center gap-3">
+                                      <SubIcon className="w-4 h-4" />
+                                      <span className="text-sm font-medium">{sub.name}</span>
+                                    </div>
+                                    {sub.badge && (
+                                      <span className="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full font-medium">
+                                        {sub.badge}
+                                      </span>
+                                    )}
+                                  </motion.button>
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </motion.ul>
+                      )}
+                    </AnimatePresence>
+                  </>
+                ) : (
+                  <Link href={item.path}>
+                    <motion.button
+                      whileHover={{ x: collapsed ? 0 : 4 }}
+                      onClick={() => setActiveItem(item.name)}
+                      className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl transition-all duration-300 group ${
+                        isActive
+                          ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg'
+                          : 'text-gray-700 hover:bg-gray-50 hover:shadow-md'
+                      }`}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className={`flex-shrink-0 ${isActive ? 'text-white' : 'text-gray-500'}`}>
+                          <Icon className="w-5 h-5" />
+                        </div>
+                        {!collapsed && (
+                          <span className="font-medium text-sm">{item.name}</span>
+                        )}
+                      </div>
+                      {!collapsed && item.badge && (
+                        <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${
+                          isActive 
+                            ? 'bg-white/20 text-white' 
+                            : item.badgeColor || 'bg-gray-100 text-gray-600'
+                        }`}>
+                          {item.badge}
+                        </span>
+                      )}
+                    </motion.button>
+                  </Link>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </nav>
 
       {/* Footer - Logout */}
-      <div className="p-4 border-t border-slate-200">
-        <button className="w-full flex items-center justify-start px-3 py-2 rounded-lg text-sm transition-all duration-200 group text-slate-600 hover:bg-red-50 hover:text-red-600 hover:shadow-sm">
-          <LogOut className="w-4 h-4 mr-3" />
+      <div className="p-6 border-t-2 border-gray-100">
+        <motion.button 
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-2xl bg-gradient-to-r from-red-500 to-red-600 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+        >
+          <LogOut className="w-5 h-5" />
           <AnimatePresence>
             {!collapsed && (
               <motion.span
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
-                transition={{ duration: 0.25 }}
+                transition={{ duration: 0.3 }}
               >
                 Logout
               </motion.span>
             )}
           </AnimatePresence>
-        </button>
+        </motion.button>
       </div>
     </motion.aside>
   );
