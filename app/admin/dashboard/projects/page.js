@@ -188,14 +188,14 @@ const ProjectsPage = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   onClick={() => setViewMode('grid')}
-                  className={`p-2 rounded-lg ${viewMode === 'grid' ? 'bg-blue-500 text-white' : 'text-gray-500 hover:text-gray-700'}`}
+                  className={`p-2 rounded-lg ${viewMode === 'grid' ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white' : 'text-gray-500 hover:text-gray-700'}`}
                 >
                   <Grid3X3 className="w-5 h-5" />
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   onClick={() => setViewMode('list')}
-                  className={`p-2 rounded-lg ${viewMode === 'list' ? 'bg-blue-500 text-white' : 'text-gray-500 hover:text-gray-700'}`}
+                  className={`p-2 rounded-lg ${viewMode === 'list' ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white' : 'text-gray-500 hover:text-gray-700'}`}
                 >
                   <List className="w-5 h-5" />
                 </motion.button>
@@ -237,21 +237,40 @@ const ProjectsPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {projectStats.map((stat, i) => {
             const Icon = stat.icon;
+
+            // Pick theme color based on label
+            const getIconColor = (label) => {
+              switch (label) {
+                case "Total Projects":
+                  return "text-blue-600";
+                case "In Progress":
+                  return "text-orange-500";
+                case "Completed":
+                  return "text-green-600";
+                case "Total Budget":
+                  return "text-teal-600";
+                default:
+                  return "text-gray-700";
+              }
+            };
+
             return (
               <motion.div
-                whileHover={{ y: -5, boxShadow: '0 10px 20px rgba(0,0,0,0.1)' }}
-                transition={{ type: 'spring', stiffness: 300 }}
+                whileHover={{ y: -5, boxShadow: "0 10px 20px rgba(0,0,0,0.1)" }}
+                transition={{ type: "spring", stiffness: 300 }}
                 key={i}
                 onClick={() => handleStatClick(stat.label)}
                 className="bg-white rounded-3xl shadow-xl border border-gray-200 p-6 flex items-center justify-between cursor-pointer"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-blue-400 rounded-xl flex items-center justify-center">
-                    <Icon className="w-6 h-6 text-white" />
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center">
+                    <Icon className={`w-7 h-7 ${getIconColor(stat.label)}`} />
                   </div>
                   <div>
                     <h3 className="text-lg font-bold text-gray-900">{stat.value}</h3>
-                    <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">{stat.label}</p>
+                    <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">
+                      {stat.label}
+                    </p>
                   </div>
                 </div>
                 <span className="text-xs font-medium text-green-600">{stat.change}</span>
@@ -274,10 +293,11 @@ const ProjectsPage = () => {
               transition={{ type: 'spring', stiffness: 300 }}
               className={`bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden ${viewMode === 'list' ? 'flex flex-col md:flex-row md:items-stretch p-6 gap-6' : 'flex flex-col'}`}
             >
-              <div className="bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 px-6 py-8 relative overflow-hidden">
+              {/* Card Top - Changed to darker blue */}
+              <div className="bg-blue-600 px-6 py-8 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-                <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-16 translate-x-16"></div>
-                <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-12 -translate-x-12"></div>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full -translate-y-16 translate-x-16"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/20 rounded-full translate-y-12 -translate-x-12"></div>
                 <div className="relative z-10">
                   <div className="flex items-center gap-4 mb-4">
                     <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center text-2xl">
@@ -304,46 +324,46 @@ const ProjectsPage = () => {
                 </div>
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-blue-400 rounded-xl flex items-center justify-center">
-                      <Clock className="w-5 h-5 text-white" />
+                    <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center p-2">
+                      <Clock className="w-5 h-5 text-gray-700 font-bold" />
                     </div>
                     <div>
                       <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Duration</p>
-                      <p className="text-gray-700 text-sm font-normal">{project.duration}d</p>
+                      <p className="text-gray-900 text-sm font-semibold">{project.duration}d</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-blue-400 rounded-xl flex items-center justify-center">
-                      <DollarSign className="w-5 h-5 text-white" />
+                    <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center p-2">
+                      <DollarSign className="w-5 h-5 text-gray-700 font-bold" />
                     </div>
                     <div>
                       <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Budget</p>
-                      <p className="text-gray-700 text-sm font-normal">{project.budget}</p>
+                      <p className="text-gray-900 text-sm font-semibold">{project.budget}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-blue-400 rounded-xl flex items-center justify-center">
-                      <User className="w-5 h-5 text-white" />
+                    <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center p-2">
+                      <User className="w-5 h-5 text-gray-700 font-bold" />
                     </div>
                     <div>
                       <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Team</p>
-                      <p className="text-gray-700 text-sm font-normal">{project.team}</p>
+                      <p className="text-gray-900 text-sm font-semibold">{project.team}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-blue-400 rounded-xl flex items-center justify-center">
-                      <Target className="w-5 h-5 text-white" />
+                    <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center p-2">
+                      <Target className="w-5 h-5 text-gray-700 font-bold" />
                     </div>
                     <div>
                       <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Timeline</p>
-                      <p className="text-gray-700 text-sm font-normal">{project.elapsed}d/{project.remaining}d</p>
+                      <p className="text-gray-900 text-sm font-semibold">{project.elapsed}d/{project.remaining}d</p>
                     </div>
                   </div>
                 </div>
                 <div className="mb-4">
                   <div className="flex justify-between text-xs mb-2">
                     <span className="text-gray-500 font-medium uppercase tracking-wide">Progress</span>
-                    <span className="text-gray-700 font-normal">{project.progress}%</span>
+                    <span className="text-gray-700 font-semibold">{project.progress}%</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div style={{ width: `${project.progress}%` }} className="bg-gradient-to-r from-blue-400 to-blue-600 h-2 rounded-full" />
@@ -357,10 +377,12 @@ const ProjectsPage = () => {
                       <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Manager</p>
                     </div>
                   </div>
+
+                  {/* View button */}
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-xl font-medium hover:from-blue-600 hover:to-blue-700 transition-all shadow-md hover:shadow-lg"
+                    className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-xl font-semibold hover:from-blue-600 hover:to-blue-700 transition-all shadow-md hover:shadow-lg"
                   >
                     View <ChevronRight className="w-4 h-4" />
                   </motion.button>

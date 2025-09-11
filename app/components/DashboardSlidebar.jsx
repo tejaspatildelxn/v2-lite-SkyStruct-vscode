@@ -102,7 +102,7 @@ const DashboardSlidebar = () => {
   return (
     <motion.aside
       animate={{ width: collapsed ? 85 : 280 }}
-      transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+      transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
       className="relative bg-white h-screen border-r-2 border-gray-100 flex flex-col shadow-xl"
     >
       {/* Collapse Button */}
@@ -114,7 +114,7 @@ const DashboardSlidebar = () => {
       >
         <motion.div
           animate={{ rotate: collapsed ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.35 }}
         >
           <ChevronLeft className="w-5 h-5 text-gray-600" />
         </motion.div>
@@ -135,46 +135,55 @@ const DashboardSlidebar = () => {
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.35 }}
               >
                 <h1 className="font-bold text-xl text-gray-900">
                   SkyStruct <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-600">V2</span>
                 </h1>
-                <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Construction Hub</p>
+                <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Lite Version</p>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
       </div>
 
-      {/* User Profile Card */}
-      <div className="p-6 border-b-2 border-gray-100">
-        <motion.div 
-          whileHover={{ scale: 1.02 }}
-          className="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-2xl p-4 border border-blue-200"
-        >
-          <div className="flex items-center gap-4">
+      {/* User Profile Card - compact & collapse friendly */}
+      <div className="px-6 py-4 border-b-2 border-gray-100">
+        {collapsed ? (
+          // Collapsed → just avatar (same size as logo)
+          <div className="flex justify-center">
             <div className="relative">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold shadow-lg">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center text-white font-bold shadow-lg">
                 AD
               </div>
-              <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+              <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white"></div>
+            </div>
+          </div>
+        ) : (
+          // Expanded → gradient card with details
+          <motion.div 
+            whileHover={{ scale: 1.02 }}
+            className="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-xl p-3 border border-blue-200 flex items-center gap-3"
+          >
+            <div className="relative flex-shrink-0">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center text-white font-bold shadow-lg">
+                AD
+              </div>
+              <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white"></div>
             </div>
             <AnimatePresence>
-              {!collapsed && (
-                <motion.div
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -10 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <h3 className="font-bold text-gray-900">Alan David</h3>
-                  <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Project Manager</p>
-                </motion.div>
-              )}
+              <motion.div
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                transition={{ duration: 0.35 }}
+              >
+                <h3 className="font-semibold text-sm text-gray-900 leading-tight">Alan David</h3>
+                <p className="text-[11px] text-gray-500 font-medium uppercase tracking-wide">Manager</p>
+              </motion.div>
             </AnimatePresence>
-          </div>
-        </motion.div>
+          </motion.div>
+        )}
       </div>
 
       {/* Main Navigation */}
@@ -211,7 +220,7 @@ const DashboardSlidebar = () => {
                       {!collapsed && (
                         <motion.div
                           animate={{ rotate: isSubmenuOpen ? 180 : 0 }}
-                          transition={{ duration: 0.3 }}
+                          transition={{ duration: 0.35 }}
                         >
                           <ChevronDown className="w-4 h-4" />
                         </motion.div>
@@ -225,7 +234,7 @@ const DashboardSlidebar = () => {
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3, ease: 'easeInOut' }}
+                          transition={{ duration: 0.35, ease: 'easeInOut' }}
                           className="mt-2 ml-4 space-y-1 overflow-hidden"
                         >
                           {item.submenu.map((sub) => {
@@ -299,28 +308,42 @@ const DashboardSlidebar = () => {
         </ul>
       </nav>
 
-      {/* Footer - Logout */}
-      <div className="p-6 border-t-2 border-gray-100">
-        <motion.button 
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-2xl bg-gradient-to-r from-red-500 to-red-600 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+{/* Footer - Logout */}
+<div className="p-6 border-t-2 border-gray-100">
+  {collapsed ? (
+    // Collapsed → light blue gradient square
+    <div className="flex justify-center">
+      <motion.div 
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="w-12 h-12 bg-gradient-to-r from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center text-blue-700 shadow-md hover:shadow-lg cursor-pointer"
+      >
+        <LogOut className="w-6 h-6" />
+      </motion.div>
+    </div>
+  ) : (
+    // Expanded → full-width gradient button
+    <motion.button 
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-2xl bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 font-medium shadow-md hover:shadow-lg transition-all duration-300"
+    >
+      <LogOut className="w-5 h-5" />
+      <AnimatePresence>
+        <motion.span
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -10 }}
+          transition={{ duration: 0.35 }}
         >
-          <LogOut className="w-5 h-5" />
-          <AnimatePresence>
-            {!collapsed && (
-              <motion.span
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -10 }}
-                transition={{ duration: 0.3 }}
-              >
-                Logout
-              </motion.span>
-            )}
-          </AnimatePresence>
-        </motion.button>
-      </div>
+          Logout
+        </motion.span>
+      </AnimatePresence>
+    </motion.button>
+  )}
+</div>
+
+
     </motion.aside>
   );
 };
