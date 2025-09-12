@@ -309,10 +309,10 @@ const ProjectsPage = () => {
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border ${project.statusColor}`}>
+                    <span className={`inline-flex items-center gap-2 px-1 py-0.5 rounded-full text-xs font-medium border ${project.statusColor}`}>
                       {project.status}
                     </span>
-                    <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border ${getPriorityColor(project.priority)}`}>
+                    <span className={`inline-flex items-center gap-2 px-1 py-0.5 rounded-full text-xs font-medium border ${getPriorityColor(project.priority)}`}>
                       {project.priority}
                     </span>
                   </div>
