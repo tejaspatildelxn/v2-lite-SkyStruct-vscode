@@ -19,14 +19,26 @@ import {
   ChevronLeft
 } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const DashboardSlidebar = () => {
   const [activeItem, setActiveItem] = useState('Project Overview');
   const [openSubmenu, setOpenSubmenu] = useState(null);
   const [collapsed, setCollapsed] = useState(false);
+  const router = useRouter();
 
   const toggleSubmenu = (menu) => {
     setOpenSubmenu(openSubmenu === menu ? null : menu);
+  };
+
+  const handleProfileClick = () => {
+    router.push('/admin/dashboard/profile');
+  };
+
+  const handleLogout = () => {
+    // Add logout logic here
+    console.log('Logging out...');
+    router.push('/login');
   };
 
   const menuItems = [
@@ -147,23 +159,29 @@ const DashboardSlidebar = () => {
         </div>
       </div>
 
-      {/* User Profile Card - compact & collapse friendly */}
+      {/* User Profile Card - Clickable */}
       <div className="px-6 py-4 border-b-2 border-gray-100">
         {collapsed ? (
-          // Collapsed → just avatar (same size as logo)
+          // Collapsed → just avatar (clickable)
           <div className="flex justify-center">
-            <div className="relative">
+            <motion.div 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleProfileClick}
+              className="relative cursor-pointer"
+            >
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center text-white font-bold shadow-lg">
                 AD
               </div>
               <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white"></div>
-            </div>
+            </motion.div>
           </div>
         ) : (
-          // Expanded → gradient card with details
+          // Expanded → gradient card with details (clickable)
           <motion.div 
             whileHover={{ scale: 1.02 }}
-            className="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-xl p-3 border border-blue-200 flex items-center gap-3"
+            onClick={handleProfileClick}
+            className="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-xl p-3 border border-blue-200 flex items-center gap-3 cursor-pointer"
           >
             <div className="relative flex-shrink-0">
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center text-white font-bold shadow-lg">
@@ -308,42 +326,42 @@ const DashboardSlidebar = () => {
         </ul>
       </nav>
 
-{/* Footer - Logout */}
-<div className="p-6 border-t-2 border-gray-100">
-  {collapsed ? (
-    // Collapsed → light blue gradient square
-    <div className="flex justify-center">
-      <motion.div 
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="w-12 h-12 bg-gradient-to-r from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center text-blue-700 shadow-md hover:shadow-lg cursor-pointer"
-      >
-        <LogOut className="w-6 h-6" />
-      </motion.div>
-    </div>
-  ) : (
-    // Expanded → full-width gradient button
-    <motion.button 
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-2xl bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 font-medium shadow-md hover:shadow-lg transition-all duration-300"
-    >
-      <LogOut className="w-5 h-5" />
-      <AnimatePresence>
-        <motion.span
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -10 }}
-          transition={{ duration: 0.35 }}
-        >
-          Logout
-        </motion.span>
-      </AnimatePresence>
-    </motion.button>
-  )}
-</div>
-
-
+      {/* Footer - Logout */}
+      <div className="p-6 border-t-2 border-gray-100">
+        {collapsed ? (
+          // Collapsed → light blue gradient square
+          <div className="flex justify-center">
+            <motion.div 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleLogout}
+              className="w-12 h-12 bg-gradient-to-r from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center text-blue-700 shadow-md hover:shadow-lg cursor-pointer"
+            >
+              <LogOut className="w-6 h-6" />
+            </motion.div>
+          </div>
+        ) : (
+          // Expanded → full-width gradient button
+          <motion.button 
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={handleLogout}
+            className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-2xl bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 font-medium shadow-md hover:shadow-lg transition-all duration-300"
+          >
+            <LogOut className="w-5 h-5" />
+            <AnimatePresence>
+              <motion.span
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                transition={{ duration: 0.35 }}
+              >
+                Logout
+              </motion.span>
+            </AnimatePresence>
+          </motion.button>
+        )}
+      </div>
     </motion.aside>
   );
 };

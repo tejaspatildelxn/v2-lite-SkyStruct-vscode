@@ -130,7 +130,6 @@ export default function LoginPage() {
             </motion.button>
 
 
-            {/* OTP Login Option */}
             
           </form>
 
