@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Search, Grid3X3, List, Filter, ChevronRight,
-  User, Briefcase, Building2, Settings, Clock, Target, DollarSign
+  User, Briefcase, Building2, Settings, Clock, Target, DollarSign,Plus,X
 } from 'lucide-react';
 
 const ProjectsPage = () => {
@@ -12,6 +12,7 @@ const ProjectsPage = () => {
   const [viewMode, setViewMode] = useState('grid');
   const [searchTerm, setSearchTerm] = useState('');
   const [filterOpen, setFilterOpen] = useState(false);
+  const [isProjectDropdownOpen, setIsProjectDropdownOpen] = useState(false);
 
   const projectStats = [
     { label: 'Total Projects', value: '24', change: '+12%', icon: Briefcase },
@@ -200,35 +201,191 @@ const ProjectsPage = () => {
                   <List className="w-5 h-5" />
                 </motion.button>
               </div>
-              <div className="relative group">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white text-lg font-bold cursor-pointer shadow-lg hover:shadow-xl transition-all"
-                >
-                  AD
-                </motion.div>
-                <div className="absolute right-0 top-14 w-48 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                  <a href="#" className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
-                    <User size={16} /> My Profile
-                  </a>
-                  <a href="#" className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
-                    <Briefcase size={16} /> My Projects
-                  </a>
-                  <a href="#" className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
-                    <Building2 size={16} /> Company
-                  </a>
-                  <a href="#" className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
-                    <Settings size={16} /> Settings
-                  </a>
-                  <hr className="my-2 border-gray-200" />
-                  <a href="#" className="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 transition-colors">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                    </svg>
-                    Log Out
-                  </a>
-                </div>
+              <div className="relative">
+<div className="relative z-50">
+  {/* Plus Button */}
+  <motion.div
+    whileHover={{ scale: 1.05 }}
+    onClick={() => setIsProjectDropdownOpen(!isProjectDropdownOpen)}
+    className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white text-lg font-bold cursor-pointer shadow-lg hover:shadow-xl transition-all"
+  >
+    <Plus size={20} />
+  </motion.div>
+  
+  {/* Backdrop with darker blur effect for modern look */}
+  {isProjectDropdownOpen && (
+    <div 
+      className="fixed inset-0 bg-white bg-opacity-40 backdrop-blur-md z-40"
+      onClick={() => setIsProjectDropdownOpen(false)}
+    />
+  )}
+  
+  {/* Project Creation Form */}
+  {isProjectDropdownOpen && (
+    <motion.div 
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ type: "spring", damping: 20 }}
+      className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-3xl h-[85vh] max-h-[700px] bg-white rounded-xl shadow-2xl border border-gray-200 z-50 flex flex-col overflow-hidden"
+    >
+      {/* Header */}
+      <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 rounded-t-xl">
+        <div className="flex justify-between items-center">
+          <div>
+            <h3 className="text-xl font-semibold text-gray-800">Create New Project</h3>
+            <p className="text-sm text-gray-600 mt-1">Fill in the project details</p>
+          </div>
+          <button 
+            onClick={() => setIsProjectDropdownOpen(false)}
+            className="p-1 hover:bg-gray-200 rounded-full transition"
+          >
+            <X size={20} className="text-gray-600" />
+          </button>
+        </div>
+      </div>
+      
+      {/* Form Content - Optimized layout */}
+      <div className="flex-1 overflow-y-auto px-6 py-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Left Column */}
+          <div className="space-y-4">
+            {/* Project Name */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Project Name *</label>
+              <input
+                type="text"
+                placeholder="Enter project name"
+                className="w-full px-3 py-2 text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            {/* Project Code */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Project Code *</label>
+              <input
+                type="text"
+                placeholder="Enter project code"
+                className="w-full px-3 py-2 text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            {/* Type and Start Date */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Type *</label>
+                <select className="w-full px-3 py-2 text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                  <option value="">Select type</option>
+                  <option value="construction">Construction</option>
+                  <option value="renovation">Renovation</option>
+                  <option value="maintenance">Maintenance</option>
+                  <option value="design">Design</option>
+                </select>
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Start Date *</label>
+                <input
+                  type="date"
+                  className="w-full px-3 py-2 text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+            </div>
+
+            {/* Currency and Time Zone */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Currency *</label>
+                <select className="w-full px-3 py-2 text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                  <option value="USD">USD ($)</option>
+                  <option value="EUR">EUR (€)</option>
+                  <option value="GBP">GBP (£)</option>
+                  <option value="INR">INR (₹)</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Time Zone *</label>
+                <select className="w-full px-3 py-2 text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                  <option value="UTC-12">UTC-12</option>
+                  <option value="UTC-8">UTC-8 (PST)</option>
+                  <option value="UTC-5">UTC-5 (EST)</option>
+                  <option value="UTC+0">UTC+0 (GMT)</option>
+                  <option value="UTC+5:30">UTC+5:30 (IST)</option>
+                  <option value="UTC+8">UTC+8 (CST)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          {/* Right Column */}
+          <div className="space-y-4">
+            {/* Budget */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Budget (In Million) *</label>
+              <input
+                type="number"
+                step="0.01"
+                placeholder="Enter budget amount"
+                className="w-full px-3 py-2 text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            {/* Location */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Location *</label>
+              <input
+                type="text"
+                placeholder="Enter project location"
+                className="w-full px-3 py-2 text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            {/* Description */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+              <textarea
+                rows={3}
+                placeholder="Enter project description"
+                className="w-full px-3 py-2 text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            {/* Project Photo */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Project Photo</label>
+              <div className="flex items-center gap-3 mt-1">
+                <label className="flex-1 px-3 py-2 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition flex items-center justify-center">
+                  <span className="text-sm text-gray-700 flex items-center">
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    Choose File
+                  </span>
+                  <input type="file" className="hidden" accept="image/*" />
+                </label>
+              </div>
+              <p className="text-xs text-gray-600 mt-1">JPEG, PNG or GIF (Max 5MB)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Form Actions */}
+      <div className="px-6 py-4 border-t border-gray-200 bg-gray-50 rounded-b-xl">
+        <div className="flex gap-3 justify-end">
+          <button 
+            onClick={() => setIsProjectDropdownOpen(false)}
+            className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium text-sm"
+          >
+            Cancel
+          </button>
+          <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition font-medium text-sm">
+            Create Project
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  )}
+</div>
+</div>
             </div>
           </div>
         </motion.div>

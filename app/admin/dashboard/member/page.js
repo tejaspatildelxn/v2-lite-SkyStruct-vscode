@@ -188,32 +188,7 @@ const MembersPage = () => {
                   <List className="w-5 h-5" />
                 </motion.button>
               </div>
-              <div className="relative group">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white text-lg font-bold cursor-pointer shadow-lg hover:shadow-xl transition-all"
-                >
-                  AD
-                </motion.div>
-                <div className="absolute right-0 top-14 w-48 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                  <a href="#" className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
-                    <User size={16} /> My Profile
-                  </a>
-                  <a href="#" className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
-                    <Users size={16} /> Members
-                  </a>
-                  <a href="#" className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
-                    <Settings size={16} /> Settings
-                  </a>
-                  <hr className="my-2 border-gray-200" />
-                  <a href="#" className="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 transition-colors">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                    </svg>
-                    Log Out
-                  </a>
-                </div>
-              </div>
+             
             </div>
           </div>
         </motion.div>

@@ -212,19 +212,30 @@ const OrganizationMail = () => {
           {/* Sidebar */}
           <motion.aside
             initial={{ width: '16rem' }}
-            animate={{ width: isSidebarOpen ? '16rem' : '3rem' }}
-            transition={{ type: 'spring', stiffness: 300 }}
+            animate={{ width: isSidebarOpen ? '16rem' : '4rem' }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className="border-r border-gray-200 bg-gray-50 flex-shrink-0 overflow-hidden relative rounded-l-3xl"
           >
-            <div className="w-64 h-full p-4 flex flex-col">
+            <div className="h-full p-4 flex flex-col">
               <div className="flex items-center justify-between mb-4">
-                <h2 className={`text-lg font-semibold text-gray-800 ${!isSidebarOpen && 'opacity-0'}`}>Filters</h2>
+                <AnimatePresence initial={false}>
+                  {isSidebarOpen && (
+                    <motion.h2 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="text-lg font-semibold text-gray-800"
+                    >
+                      Filters
+                    </motion.h2>
+                  )}
+                </AnimatePresence>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   onClick={toggleSidebar}
-                  className="text-gray-500 hover:text-gray-700 absolute right-4 top-4"
+                  className="text-gray-500 hover:text-gray-700"
                 >
-                  <ChevronLeft className={`w-5 h-5 ${!isSidebarOpen && 'rotate-180'}`} />
+                  <ChevronLeft className={`w-5 h-5 transition-transform ${!isSidebarOpen && 'rotate-180'}`} />
                 </motion.button>
               </div>
               <nav className="space-y-2">
@@ -240,8 +251,19 @@ const OrganizationMail = () => {
                       activeFolder === name && !activeLabel ? 'bg-blue-100 text-blue-700' : 'text-gray-600 hover:bg-gray-100'
                     } ${!isSidebarOpen && 'justify-center px-0'}`}
                   >
-                    <Icon className="w-4 h-4" />
-                    <span className={`${!isSidebarOpen && 'hidden'}`}>{name}</span>
+                    <Icon className="w-4 h-4 flex-shrink-0" />
+                    <AnimatePresence initial={false}>
+                      {isSidebarOpen && (
+                        <motion.span
+                          initial={{ opacity: 0, width: 0 }}
+                          animate={{ opacity: 1, width: 'auto' }}
+                          exit={{ opacity: 0, width: 0 }}
+                          className="truncate"
+                        >
+                          {name}
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
                     {count > 0 && isSidebarOpen && (
                       <span className="ml-auto text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full">
                         {count}
@@ -251,7 +273,18 @@ const OrganizationMail = () => {
                 ))}
               </nav>
               <div className="mt-auto pt-4 border-t border-gray-200">
-                <h3 className={`text-sm font-semibold text-gray-800 mb-2 ${!isSidebarOpen && 'hidden'}`}>Labels</h3>
+                <AnimatePresence initial={false}>
+                  {isSidebarOpen && (
+                    <motion.h3 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="text-sm font-semibold text-gray-800 mb-2"
+                    >
+                      Labels
+                    </motion.h3>
+                  )}
+                </AnimatePresence>
                 <div className="space-y-2">
                   {labels.map((label) => (
                     <motion.button
@@ -265,8 +298,19 @@ const OrganizationMail = () => {
                         activeLabel === label.name ? 'bg-blue-100 text-blue-700' : 'text-gray-600 hover:bg-gray-100'
                       } ${!isSidebarOpen && 'justify-center px-0'}`}
                     >
-                      <div className={`w-3 h-3 rounded-full ${label.color.split(' ')[0]} ${!isSidebarOpen && 'w-4 h-4'}`}></div>
-                      <span className={`${!isSidebarOpen && 'hidden'}`}>{label.name}</span>
+                      <div className={`w-3 h-3 rounded-full ${label.color.split(' ')[0]} flex-shrink-0`}></div>
+                      <AnimatePresence initial={false}>
+                        {isSidebarOpen && (
+                          <motion.span
+                            initial={{ opacity: 0, width: 0 }}
+                            animate={{ opacity: 1, width: 'auto' }}
+                            exit={{ opacity: 0, width: 0 }}
+                            className="truncate"
+                          >
+                            {label.name}
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
                     </motion.button>
                   ))}
                   <motion.button
@@ -275,25 +319,23 @@ const OrganizationMail = () => {
                     onClick={openLabelEditor}
                     className={`flex items-center ${isSidebarOpen ? 'gap-2' : 'justify-center'} w-full px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-100 transition-all`}
                   >
-                    <Plus className="w-4 h-4" />
-                    <span className={`${!isSidebarOpen && 'hidden'}`}>Add Label</span>
+                    <Plus className="w-4 h-4 flex-shrink-0" />
+                    <AnimatePresence initial={false}>
+                      {isSidebarOpen && (
+                        <motion.span
+                          initial={{ opacity: 0, width: 0 }}
+                          animate={{ opacity: 1, width: 'auto' }}
+                          exit={{ opacity: 0, width: 0 }}
+                        >
+                          Add Label
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
                   </motion.button>
                 </div>
               </div>
             </div>
           </motion.aside>
-
-          {/* Toggle Button when Sidebar is Closed */}
-          {!isSidebarOpen && (
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={toggleSidebar}
-              className="absolute top-1/2 left-12 transform -translate-y-1/2 bg-gradient-to-r from-blue-500 to-blue-600 text-white p-2 rounded-r-xl shadow-md hover:shadow-lg z-10"
-            >
-              <Menu className="w-5 h-5" />
-            </motion.button>
-          )}
 
           {/* Mail Area */}
           <div className="flex-1 flex flex-col rounded-r-3xl overflow-hidden">

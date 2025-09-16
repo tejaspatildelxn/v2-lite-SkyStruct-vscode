@@ -292,7 +292,7 @@ export default function EnhancedPermissionsPage() {
 </div>
 
 
-   {/* Tabs */}
+  {/* Tabs */}
 <div className="flex w-full bg-gray-100 p-1 rounded-xl mb-6">
   {tabs.map((tab) => {
     const Icon = tab.icon;
@@ -300,11 +300,12 @@ export default function EnhancedPermissionsPage() {
       <button
         key={tab.id}
         onClick={() => setActiveTab(tab.id)}
-        className={`flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-lg transition-all flex-1 justify-center ${
-          activeTab === tab.id
-            ? "bg-white text-blue-600 shadow-sm"
-            : "text-gray-600 hover:text-gray-900"
-        }`}
+        className={`flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-lg transition-all flex-1 justify-center
+          ${
+            activeTab === tab.id
+              ? "bg-blue-50 text-blue-600 shadow-sm" // 🔹 light blue background highlight
+              : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+          }`}
       >
         <Icon size={18} />
         {tab.name}
@@ -312,6 +313,7 @@ export default function EnhancedPermissionsPage() {
     );
   })}
 </div>
+
 
 
       {/* Content based on active tab */}
@@ -337,7 +339,6 @@ export default function EnhancedPermissionsPage() {
                         </div>
                         <div>
                           <h3 className="text-lg font-semibold text-gray-900">{role.name}</h3>
-                          <p className="text-sm text-gray-600">{role.description}</p>
                         </div>
                         <span className={`ml-auto px-2.5 py-1 text-xs font-medium rounded-full ${
                           role.status === "Active" 
@@ -437,7 +438,6 @@ export default function EnhancedPermissionsPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900">{member.name}</h3>
-                  <p className="text-sm text-gray-600">User account with {member.role} privileges</p>
                 </div>
                 <span className={`ml-auto px-2.5 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-700`}>
                   Active
@@ -689,7 +689,6 @@ export default function EnhancedPermissionsPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900">Not Started Activity</h3>
-                  <p className="text-sm text-gray-600">Dashboard widget permission for Granite Horizon</p>
                 </div>
                 <span className="ml-auto px-2.5 py-1 text-xs font-medium rounded-full bg-purple-100 text-purple-700">
                   Counter
