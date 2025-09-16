@@ -3,9 +3,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { 
-  Search, 
-  Bell, 
-  ChevronDown,
   Home,
   Users,
   Calendar,
@@ -14,41 +11,37 @@ import {
   Package,
   CheckCircle,
   BarChart3,
-  Settings,
-  Mail,
-  User,
   Folder,
-  AlertCircle,
   Clock,
   CheckSquare,
   FileCheck,
   MessageSquare,
   RotateCcw,
   Eye,
-  PieChart
+  PieChart,AlertCircle
 } from "lucide-react";
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState("overview");
 
-  // Mock data for dashboard metrics
-  const metrics = [
-    { title: "Not Started Activity", value: 23, icon: Clock, color: "bg-blue-500" },
-    { title: "Drawings Under Review", value: 4, icon: FileCheck, color: "bg-yellow-500" },
-    { title: "Open GRN", value: 47, icon: Package, color: "bg-purple-500" },
-    { title: "Paid Bill", value: "INR 4,913,643", icon: CreditCard, color: "bg-green-500" },
-    { title: "Open Indent", value: 27, icon: FileText, color: "bg-orange-500" },
-    { title: "Open RFI", value: 2, icon: MessageSquare, color: "bg-red-500" },
-    { title: "Re-inspect", value: 1, icon: RotateCcw, color: "bg-indigo-500" },
-    { title: "Under Review Submittal", value: 10, icon: Eye, color: "bg-pink-500" },
+  // Mock data for dashboard stats
+  const projectStats = [
+    { label: "Total Projects", value: 50, icon: Folder, change: "+5%" },
+    { label: "In Progress", value: 25, icon: AlertCircle, change: "+2%" },
+    { label: "Completed", value: 15, icon: CheckSquare, change: "+3%" },
+    { label: "Total Budget", value: "INR 10M", icon: CreditCard, change: "+10%" },
   ];
 
   return (
     <div className="h-screen bg-gray-50">
       {/* Top Navigation Bar */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+      <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-3xl shadow-xl border border-gray-200 mx-6 mt-6">
         <div className="flex items-center gap-6">
-          <h1 className="text-xl font-bold text-gray-800">Granite Horizon</h1>
+          <h1 className="text-xl font-bold text-gray-800 max-w-[200px] truncate">Granite Horizon Very Long Project Name</h1>
+        </div>
+        
+        <div className="flex items-center gap-6">
+          {/* Navigation Tabs */}
           <nav className="flex space-x-1 bg-gray-100 rounded-xl p-1">
             {[
               { name: "Dashboard", icon: Home, tab: "overview" },
@@ -65,7 +58,7 @@ export default function DashboardPage() {
                 onClick={() => setActiveTab(tab)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                   activeTab === tab
-                    ? "bg-blue-600 text-white shadow-md"
+                    ? "bg-blue-100 text-blue-600"
                     : "text-gray-600 hover:text-gray-900 hover:bg-white"
                 }`}
               >
@@ -75,58 +68,58 @@ export default function DashboardPage() {
             ))}
           </nav>
         </div>
-        
-        <div className="flex items-center gap-4">
-          <button className="p-2 rounded-lg hover:bg-gray-100 transition">
-            <Mail size={20} className="text-gray-600" />
-          </button>
-          <button className="p-2 rounded-lg hover:bg-gray-100 transition">
-            <Bell size={20} className="text-gray-600" />
-          </button>
-          <button className="p-2 rounded-lg hover:bg-gray-100 transition">
-            <Settings size={20} className="text-gray-600" />
-          </button>
-          <div className="w-px h-6 bg-gray-200"></div>
-          <button className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition">
-            <User size={18} className="text-gray-600" />
-            <span className="text-sm font-medium text-gray-700">My Projects</span>
-          </button>
-        </div>
       </header>
 
       {/* Main Content - Full Screen */}
       <div className="flex-1 overflow-y-auto p-6">
-        <h1 className="text-2xl font-bold text-gray-800 mb-8">Project Overview</h1>
-        
-        {/* Metrics */}
+        {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {metrics.map((metric, index) => {
-            const Icon = metric.icon;
+          {projectStats.map((stat, i) => {
+            const Icon = stat.icon;
+
+            // Pick theme color based on label
+            const getIconColor = (label) => {
+              switch (label) {
+                case "Total Projects":
+                  return "text-blue-600";
+                case "In Progress":
+                  return "text-orange-500";
+                case "Completed":
+                  return "text-green-600";
+                case "Total Budget":
+                  return "text-teal-600";
+                default:
+                  return "text-gray-700";
+              }
+            };
+
             return (
               <motion.div
                 whileHover={{ y: -5, boxShadow: "0 10px 20px rgba(0,0,0,0.1)" }}
                 transition={{ type: "spring", stiffness: 300 }}
-                key={index}
+                key={i}
+                onClick={() => {}}
                 className="bg-white rounded-3xl shadow-xl border border-gray-200 p-6 flex items-center justify-between cursor-pointer"
               >
                 <div className="flex items-center gap-4">
-                  <div className={`p-3 rounded-lg ${metric.color}`}>
-                    <Icon size={20} className="text-white" />
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center">
+                    <Icon className={`w-7 h-7 ${getIconColor(stat.label)}`} />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-gray-900">{metric.value}</h3>
+                    <h3 className="text-lg font-bold text-gray-900">{stat.value}</h3>
                     <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">
-                      {metric.title}
+                      {stat.label}
                     </p>
                   </div>
                 </div>
+                <span className="text-xs font-medium text-green-600">{stat.change}</span>
               </motion.div>
             );
           })}
         </div>
 
         {/* Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Drawing Status Chart */}
           <motion.div
             whileHover={{ y: -5, boxShadow: "0 10px 20px rgba(0,0,0,0.1)" }}
